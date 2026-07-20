@@ -6,14 +6,22 @@ t_count = sequence.count("T")
 g_count = sequence.count("G")
 c_count = sequence.count("C")
 
-gc_count = g_count + c_count
-gc_percent = gc_count / len(sequence) * 100
+valid_base_count = a_count + t_count + g_count + c_count
 
-print("Sequence name:", sequence_name)
-print("DNA sequence:", sequence)
-print("Length:", len(sequence))
-print("A count:", a_count)
-print("T count:", t_count)
-print("G count:", g_count)
-print("C count:", c_count)
-print(f"GC percentage: {gc_percent:.2f}%")
+if len(sequence) == 0:
+    print("Error: DNA sequence cannot be empty.")
+elif valid_base_count != len(sequence):
+    print("Error: DNA sequence can contain only A, T, G and C.")
+else:
+    gc_count = g_count + c_count
+    gc_percent = gc_count / len(sequence) * 100
+
+    print("Sequence name:", sequence_name)
+    print("DNA sequence:", sequence)
+    print("Length:", len(sequence))
+    print("A count:", a_count)
+    print("T count:", t_count)
+    print("G count:", g_count)
+    print("C count:", c_count)
+    print(f"GC percentage: {gc_percent:.2f}%")
+    
