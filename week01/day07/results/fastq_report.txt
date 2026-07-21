@@ -1,0 +1,11 @@
+Read name: read_1
+Sequence: ATGCCGTTAGCA
+Length: 12
+Average quality: 40.00
+Q30 bases: 100.00%
+Read name: read_2
+Sequence: GGCAATTTCCGA
+Length: 12
+Average quality: 30.00
+Q30 bases: 50.00%
+Total reads: 2

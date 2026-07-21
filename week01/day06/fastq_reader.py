@@ -21,7 +21,11 @@ def calculate_quality_stats(quality):
     return average_quality, q30_percent
 
 
-fastq_path = "week01/day06/data/example.fastq"
+if len(sys.argv) != 2:
+    print("Usage: python fastq_reader.py <input.fastq>")
+    sys.exit(1)
+
+fastq_path = sys.argv[1]
 read_count = 0
 
 with open(fastq_path, "r") as fastq_file:
