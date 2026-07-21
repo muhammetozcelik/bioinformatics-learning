@@ -1,22 +1,38 @@
+import gzip
+import math
 import sys
+
+def open_fastq(fastq_path):
+    if fastq_path.endswith(".gz"):
+        return gzip.open(fastq_path, "rt")
+
+    return open(fastq_path, "r")
 
 
 def calculate_quality_stats(quality):
-    quality_scores = []
+    total_error_probability = 0
+    q30_count = 0
 
     for character in quality:
         phred_score = ord(character) - 33
-        quality_scores.append(phred_score)
+        error_probability = 10 ** (-phred_score / 10)
 
-    average_quality = sum(quality_scores) / len(quality_scores)
+        total_error_probability = (
+            total_error_probability + error_probability
+        )
 
-    q30_count = 0
-
-    for phred_score in quality_scores:
         if phred_score >= 30:
             q30_count = q30_count + 1
 
-    q30_percent = q30_count / len(quality_scores) * 100
+    average_error_probability = (
+        total_error_probability / len(quality)
+    )
+
+    average_quality = (
+        -10 * math.log10(average_error_probability)
+    )
+
+    q30_percent = q30_count / len(quality) * 100
 
     return average_quality, q30_percent
 
@@ -25,10 +41,11 @@ if len(sys.argv) != 2:
     print("Usage: python fastq_reader.py <input.fastq>")
     sys.exit(1)
 
+
 fastq_path = sys.argv[1]
 read_count = 0
 
-with open(fastq_path, "r") as fastq_file:
+with open_fastq(fastq_path) as fastq_file:
     while True:
         header = fastq_file.readline().strip()
 
@@ -54,7 +71,9 @@ with open(fastq_path, "r") as fastq_file:
             sys.exit(1)
 
         read_name = header[1:]
-        average_quality, q30_percent = calculate_quality_stats(quality)
+        average_quality, q30_percent = calculate_quality_stats(
+            quality
+        )
 
         print("Read name:", read_name)
         print("Sequence:", sequence)
