@@ -1,4 +1,5 @@
 # Bioinformatics Learning
+[![Python tests](https://github.com/muhammetozcelik/bioinformatics-learning/actions/workflows/python-tests.yml/badge.svg)](https://github.com/muhammetozcelik/bioinformatics-learning/actions/workflows/python-tests.yml)
 
 Structured learning repository for computational genomics and bioinformatics.
 
